@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 import requests
 from huggingface_hub import InferenceClient
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+huggingface_token = os.getenv("HUGGINGFACE_TOKEN")
 
 # Define models for local and remote inference
 local_model = "distilbert-base-uncased-finetuned-sst-2-english"
@@ -13,7 +17,7 @@ remote_model = "siebert/sentiment-roberta-large-english"
 local_pipeline = pipeline("sentiment-analysis", model=local_model)
 
 # Initialize the inference client
-remote_inference_client = InferenceClient(remote_model)
+remote_inference_client = InferenceClient(model=remote_model,token=huggingface_token)
 
 # OMDb API key (replace with your own API key)
 OMDB_API_URL = 'http://www.omdbapi.com/'
